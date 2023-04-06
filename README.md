@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Gas Lockr
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Gas Price Insurance is an insurance project that aims to provide users with protection against Ethereum gas price fluctuations. Users can ensure their transactions are protected during gas price fluctuations by purchasing insurance.
 
-## Available Scripts
+Gas Lockr是一个保险项目，旨在为用户提供防止以太坊 Gas 价格波动的保险。用户可以通过购买保险来确保自己的交易能够在 Gas 价格波动时得到保障。
 
-In the project directory, you can run:
+## Features 功能
 
-### `npm start`
+- Choose different insurance plans 选择不同的保险计划
+- View expected returns 查看预期收益
+- Purchase insurance and make payment 购买保险并进行支付
+- View purchased insurance 查看已购买的保险
+- Claim 索赔
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation 安装
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+First, clone the repository to your local machine:
 
-### `npm test`
+首先，克隆仓库到本地：
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`git clone https://github.com/GasLockR/gaslockr-frontend.git`
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Enter the project directory: 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+进入项目目录： 
 
-### `npm run eject`
+`cd gaslockr-frontend`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Install dependencies: 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+安装依赖：
 
-## Learn More
+`npm install`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+Start the development server: 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+启动开发服务器：
 
-### Analyzing the Bundle Size
+`npm start`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Now, you can visit `http://localhost:3000` to view the project.
 
-### Advanced Configuration
+现在，您可以访问 `http://localhost:3000` 来查看项目。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Tech Stack 技术栈
 
-### Deployment
+- React
+- Tailwind CSS
+- Ant Design
+- React Router
+- ECharts
+- Ethers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contributing 贡献
 
-### `npm run build` fails to minify
+Contributions are welcome. Please make sure your code follows the project's code style.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+欢迎贡献代码或提出建议。请确保您的代码遵循项目的代码规范。
+
+## License 许可
+
+This project is licensed under the [MIT License](LICENSE).
+
+此项目采用 [MIT License](LICENSE) 许可。
