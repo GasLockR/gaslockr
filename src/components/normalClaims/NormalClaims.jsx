@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, Space, message, Modal, Input, Form } from "antd";
 import useWeb3Provider from "../hooks/useWeb3Provider";
 import _ from "lodash";
+import moment from "moment";
 
 const NormalClaims = () => {
   const policies = [
@@ -185,8 +186,8 @@ const NormalClaims = () => {
       maxCoverage: _.toNumber(maxValue),
       minFluctuation: Type === 0 ? 5 : Type === 1 ? 10 : 15,
       triggerGasPrice: triggerValue.toNumber(),
-      purchaseDate: _.toNumber(startTime),
-      endDate: _.toNumber(endTime),
+      purchaseDate: moment(_.toNumber(startTime) * 1000).format("YYYY-MM-DD"),
+      endDate: moment(_.toNumber(endTime) * 1000).format("YYYY-MM-DD"),
       status: isExpired ? "Expired" : "Active",
     };
   };
