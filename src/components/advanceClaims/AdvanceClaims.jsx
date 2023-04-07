@@ -1,5 +1,7 @@
-import React from "react";
-import { Table, Button, Space } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, Button, Space, message, Modal, Input, Form } from "antd";
+import useWeb3Provider from "../hooks/useWeb3Provider";
+import _ from "lodash";
 
 const AdvanceClaims = () => {
   const policies = [
@@ -39,25 +41,43 @@ const AdvanceClaims = () => {
   ];
 
   const columns = [
-    {
-      title: "Insured Address",
-      dataIndex: "insuredAddress",
-      key: "insuredAddress",
-      render: (text) => (
-        <Button
-          type="link"
-          onClick={() => {
-            navigator.clipboard.writeText(text);
-          }}
-        >
-          {`${text.slice(0, 4)}...${text.slice(-4)}`}
-        </Button>
-      ),
-    },
+    // {
+    //   title: "Insured Address",
+    //   dataIndex: "insuredAddress",
+    //   key: "insuredAddress",
+    //   render: (text) => (
+    //     <Button
+    //       type="link"
+    //       onClick={() => {
+    //         navigator.clipboard.writeText(text);
+    //       }}
+    //     >
+    //       {`${text.slice(0, 4)}...${text.slice(-4)}`}
+    //     </Button>
+    //   ),
+    // },
     {
       title: "Policy Type",
       dataIndex: "policyType",
       key: "policyType",
+    },
+    {
+      title: "Current Coverage",
+      dataIndex: "currentCoverage",
+      key: "currentCoverage",
+      // render: (text) => `${text} ETH`,
+    },
+    {
+      title: "Max Coverage",
+      dataIndex: "maxCoverage",
+      key: "maxCoverage",
+      render: (text) => `${text} ETH`,
+    },
+    {
+      title: "Min Fluctuation",
+      dataIndex: "minFluctuation",
+      key: "minFluctuation",
+      render: (text) => `${text}%`,
     },
     {
       title: "Purchase Date",
@@ -68,25 +88,6 @@ const AdvanceClaims = () => {
       title: "End Date",
       dataIndex: "endDate",
       key: "endDate",
-    },
-    // advanced amount remove, add a column of real-time coverage
-    {
-      title: "Max Coverage",
-      dataIndex: "maxCoverage",
-      key: "maxCoverage",
-      render: (text) => `${text} ETH`,
-    },
-    {
-      title: "Target Gas Price",
-      dataIndex: "targetGasPrice",
-      key: "targetGasPrice",
-      render: (text) => `${text} Gwei`,
-    },
-    {
-      title: "Fluctuation",
-      dataIndex: "fluctuation",
-      key: "fluctuation",
-      render: (text) => `${text}%`,
     },
     {
       title: "Status",
@@ -104,10 +105,90 @@ const AdvanceClaims = () => {
       ),
     },
   ];
+
+  const { provider, signer, contract } = useWeb3Provider();
+  const [policiesData, setPolicies] = useState();
+  const [loading, setLoading] = useState(false);
+  const [claimLoading, setClaimLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!signer || !contract) return;
+
+      setLoading(true);
+
+      try {
+        const address = await signer.getAddress();
+        const userOrderData = await contract.userOrder(address);
+        console.log(userOrderData, "userOrderData");
+
+        // id: 1,
+        // insuredAddress: address,
+        // policyType通过Type的0，1，2确定，0是7 Days，1是15 Days，2是30Days
+        // maxCoverage通过maxValue判断
+        // minFluctuation根据policyType决定
+        // triggerGasPrice通过triggerValue决定
+        // purchaseDate通过startTime确定
+        // endDate通过endTime确定
+        // status通过isExpired判断
+        const formattedData = formatUserOrderData(address, userOrderData);
+        console.log(formattedData, "formattedData");
+
+        if (formattedData) {
+          setPolicies([formattedData]);
+        }
+
+        message.success("Data fetched successfully!");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        message.error("Error fetching data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [signer, contract]);
+
+  const formatUserOrderData = (address, userOrderData) => {
+    const policyTypes = ["7 Days", "15 Days", "30 Days"];
+
+    const {
+      Type,
+      maxValue,
+      triggerValue,
+      startTime,
+      endTime,
+      isExpired,
+      exists,
+      Level,
+    } = userOrderData;
+
+    if (Level === 1) {
+      return;
+    }
+
+    // if (exists === false) {
+    //   return;
+    // }
+
+    return {
+      id: 1,
+      // insuredAddress: address,
+      policyType: policyTypes[Type],
+      maxCoverage: _.toNumber(maxValue),
+      minFluctuation: Type === 0 ? 5 : Type === 1 ? 10 : 15,
+      triggerGasPrice: triggerValue.toNumber(),
+      purchaseDate: _.toNumber(startTime),
+      endDate: _.toNumber(endTime),
+      status: isExpired ? "Expired" : "Active",
+    };
+  };
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-bold mb-8">Advance Claims</h1>
-      <Table columns={columns} dataSource={policies} rowKey="id" />
+      <Table columns={columns} dataSource={policiesData} rowKey="id" />
     </div>
   );
 };

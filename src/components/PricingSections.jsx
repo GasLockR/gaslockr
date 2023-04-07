@@ -11,6 +11,8 @@ const PricingSections = ({ level }) => {
       title: "7 Days",
       subTitle: "Quick coverage",
       price: level === "normal" ? "$10" : "$20",
+      maxCoverage: "10,00",
+      minFluctuation: "5%",
       features: [
         "Flexible coverage",
         "Affordable rate",
@@ -23,6 +25,8 @@ const PricingSections = ({ level }) => {
       title: "15 Days",
       subTitle: "Balanced plan",
       price: level === "normal" ? "$30" : "$60",
+      maxCoverage: "10,000",
+      minFluctuation: "10%",
       popular: true,
       features: [
         "Best value",
@@ -36,6 +40,8 @@ const PricingSections = ({ level }) => {
       title: "30 Days",
       subTitle: "Complete protection",
       price: level === "normal" ? "$100" : "$200",
+      maxCoverage: "20,000",
+      minFluctuation: "25%",
       features: [
         "Maximum protection",
         "Long-term coverage",
@@ -161,6 +167,19 @@ const PricingSections = ({ level }) => {
 
                   {/* max coverage */}
                   {/* min fluctuation */}
+                  <div className="text-center mt-6">
+                    Max Coverage:
+                    <span className="ml-2 font-semibold">
+                      {plan.maxCoverage}
+                    </span>
+                  </div>
+                  <div className="text-center mt-2">
+                    Min Fluctuation:
+                    <span className="ml-2 font-semibold">
+                      {plan.minFluctuation}
+                    </span>
+                  </div>
+
                   <ul className="mt-6 space-y-4 text-center">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="text-gray-600">
