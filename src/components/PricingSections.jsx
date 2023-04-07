@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import ExpectedReturnsChart from "./ExpectedReturnsChart";
 import PaymentInfo from "./PaymentInfo";
+import useWeb3Provider from "./hooks/useWeb3Provider";
+import { BigNumber } from "ethers";
 
 const PricingSections = ({ level }) => {
   const pricingPlans = [
@@ -43,36 +45,43 @@ const PricingSections = ({ level }) => {
       ],
     },
   ];
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [chartData, setChartData] = useState({ rate: [], amount: [] });
   const [actualPaymentData, setActualPaymentData] = useState({
     rate: 0,
     amount: 0,
   });
+  const [coverage, setCoverage] = useState(BigNumber.from(0));
+  const [orderType, setOrderType] = useState(0);
+
+  const { provider, signer, contract } = useWeb3Provider();
 
   const handleGetStarted = (plan) => {
+    console.log(plan, "fuck");
     if (level === "normal") {
       // Normal level behavior
+      setCoverage("100000000000000000000");
       console.log(`Get started with ${plan.title} - Normal Level`);
     } else if (level === "advanced") {
       // Advanced level behavior
+      setCoverage("1000000000000000000000");
       console.log(`Get started with ${plan.title} - Advanced Level`);
     }
 
-    // You can calculate your rate and amount here based on the selected plan.
-    // const rate = plan.price === "$10" ? 5 : plan.price === "$30" ? 10 : 15;
-    // const amount = plan.price === "$10" ? 50 : plan.price === "$30" ? 100 : 200;
+    switch (plan.title) {
+      case "7 Days":
+        setOrderType(0);
+        break;
+      case "15 Days":
+        setOrderType(1);
+        break;
+      case "30 Days":
+        setOrderType(2);
+        break;
+      default:
+        break;
+    }
 
-    // const rateData = Array.from({ length: 101 }, (_, i) => i);
-    // const amountData = rateData.map((r) =>
-    //   r >= rate ? amount * (r / 100) : 0
-    // );
-
-    // setChartData({ rate: rateData, amount: amountData });
-    // setIsModalVisible(true);
-    // Show modal with chart
-    // You should replace these sample data with your actual data
     setChartData({
       rate: ["0%", "1%", "2%", "5%", "8%", "10%"],
       amount: [0, 5, 15, 30, 30, 30],
@@ -83,12 +92,19 @@ const PricingSections = ({ level }) => {
     setIsModalVisible(true);
   };
 
-  const handleModalOk = () => {
-    // TODO: 6 types; input:address/coverage/type
+  const handleModalOk = async () => {
+    try {
+      const tx = await contract.deposit(
+        signer.getAddress(),
+        orderType,
+        coverage.toString()
+      );
+      await tx.wait();
+    } catch (error) {
+      console.error("Error in deposit transaction:", error);
+    }
 
     // TODO: payment = coverage * rate
-
-    setIsModalVisible(false);
   };
 
   const handleModalCancel = () => {
@@ -136,6 +152,9 @@ const PricingSections = ({ level }) => {
                       {plan.price}
                     </span>
                   </div>
+
+                  {/* max coverage */}
+                  {/* min fluctuation */}
                   <ul className="mt-6 space-y-4 text-center">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="text-gray-600">
@@ -155,6 +174,7 @@ const PricingSections = ({ level }) => {
           </div>
         </div>
       </div>
+
       <Modal
         title="Expected Returns"
         open={isModalVisible}

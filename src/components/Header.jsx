@@ -164,6 +164,7 @@ const Header = () => {
                 setIsConnected(false);
                 setWalletAddress("");
                 localStorage.removeItem("walletAddress");
+                localStorage.removeItem("signature");
                 setIsModalVisible(false);
               }}
             >
