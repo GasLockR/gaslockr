@@ -148,7 +148,7 @@ const Header = () => {
       </div>
       <Modal
         title="Disconnect Wallet"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={
           <div>

@@ -8,7 +8,6 @@ const PricingSections = ({ level }) => {
     {
       title: "7 Days",
       subTitle: "Quick coverage",
-      minPrice: "Min.",
       price: level === "normal" ? "$10" : "$20",
       features: [
         "Flexible coverage",
@@ -21,7 +20,6 @@ const PricingSections = ({ level }) => {
     {
       title: "15 Days",
       subTitle: "Balanced plan",
-      minPrice: "Min.",
       price: level === "normal" ? "$30" : "$60",
       popular: true,
       features: [
@@ -35,7 +33,6 @@ const PricingSections = ({ level }) => {
     {
       title: "30 Days",
       subTitle: "Complete protection",
-      minPrice: "Min.",
       price: level === "normal" ? "$100" : "$200",
       features: [
         "Maximum protection",
@@ -90,7 +87,7 @@ const PricingSections = ({ level }) => {
     // TODO: 6 types; input:address/coverage/type
 
     // TODO: payment = coverage * rate
-    
+
     setIsModalVisible(false);
   };
 
@@ -135,9 +132,6 @@ const PricingSections = ({ level }) => {
                     )}
                   </div>
                   <div className="text-center mt-2">
-                    <span className="text-xl font-bold text-gray-500">
-                      {plan.minPrice}{" "}
-                    </span>
                     <span className="text-5xl font-bold text-indigo-600">
                       {plan.price}
                     </span>
