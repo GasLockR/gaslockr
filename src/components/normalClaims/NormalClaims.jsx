@@ -159,6 +159,7 @@ const NormalClaims = () => {
 
   const formatUserOrderData = (address, userOrderData) => {
     const policyTypes = ["7 Days", "15 Days", "30 Days"];
+    const payment = [1000, 2000, 5000];
 
     const {
       Type,
@@ -175,15 +176,15 @@ const NormalClaims = () => {
       return;
     }
 
-    // if (exists === false) {
-    //   return;
-    // }
+    if (exists === false) {
+      return;
+    }
 
     return {
       id: 1,
       // insuredAddress: address,
       policyType: policyTypes[Type],
-      maxCoverage: _.toNumber(maxValue),
+      maxCoverage: payment[Type],
       minFluctuation: Type === 0 ? 5 : Type === 1 ? 10 : 15,
       triggerGasPrice: triggerValue.toNumber(),
       purchaseDate: moment(_.toNumber(startTime) * 1000).format("YYYY-MM-DD"),

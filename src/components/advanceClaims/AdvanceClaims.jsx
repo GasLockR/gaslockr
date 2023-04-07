@@ -152,13 +152,13 @@ const AdvanceClaims = () => {
       Level,
     } = userOrderData;
 
-    if (Level === 1) {
+    if (Level === 0) {
       return;
     }
 
-    // if (exists === false) {
-    //   return;
-    // }
+    if (exists === false) {
+      return;
+    }
 
     return {
       id: 1,

@@ -4,6 +4,7 @@ import ExpectedReturnsChart from "./ExpectedReturnsChart";
 import PaymentInfo from "./PaymentInfo";
 import useWeb3Provider from "./hooks/useWeb3Provider";
 import { BigNumber } from "ethers";
+import { ethers } from "ethers";
 
 const PricingSections = ({ level }) => {
   const pricingPlans = [
@@ -60,18 +61,18 @@ const PricingSections = ({ level }) => {
   const [coverage, setCoverage] = useState(BigNumber.from(0));
   const [orderType, setOrderType] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [claimlevel, setClaimLevel] = useState(0);
 
   const { provider, signer, contract } = useWeb3Provider();
 
   const handleGetStarted = (plan) => {
-    console.log(plan, "fuck");
     if (level === "normal") {
       // Normal level behavior
-      setCoverage("100000000000000000000");
+      setClaimLevel(0);
       console.log(`Get started with ${plan.title} - Normal Level`);
     } else if (level === "advanced") {
       // Advanced level behavior
-      setCoverage("1000000000000000000000");
+      setClaimLevel(1);
       console.log(`Get started with ${plan.title} - Advanced Level`);
     }
 
@@ -102,13 +103,19 @@ const PricingSections = ({ level }) => {
   const handleModalOk = async () => {
     setIsLoading(true);
     try {
+      const address = await signer.getAddress();
+      console.log(address, orderType, claimlevel);
       const tx = await contract.deposit(
-        signer.getAddress(),
+        address,
+        // orderType 决定买的那个保险，分别为7d,15d,30d
         orderType,
-        coverage.toString()
+        // claimlevel 决定买的是normal 还是 advance
+        claimlevel,
+        { value: ethers.utils.parseEther("0.00001") }
       );
       await tx.wait();
       setIsLoading(false);
+      setIsModalVisible(false);
       message.success("Deposit transaction successful!");
     } catch (error) {
       console.error("Error in deposit transaction:", error);
