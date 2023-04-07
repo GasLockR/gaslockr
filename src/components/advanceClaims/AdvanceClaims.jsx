@@ -109,7 +109,6 @@ const AdvanceClaims = () => {
   const { provider, signer, contract } = useWeb3Provider();
   const [policiesData, setPolicies] = useState();
   const [loading, setLoading] = useState(false);
-  const [claimLoading, setClaimLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,19 +119,7 @@ const AdvanceClaims = () => {
       try {
         const address = await signer.getAddress();
         const userOrderData = await contract.userOrder(address);
-        console.log(userOrderData, "userOrderData");
-
-        // id: 1,
-        // insuredAddress: address,
-        // policyType通过Type的0，1，2确定，0是7 Days，1是15 Days，2是30Days
-        // maxCoverage通过maxValue判断
-        // minFluctuation根据policyType决定
-        // triggerGasPrice通过triggerValue决定
-        // purchaseDate通过startTime确定
-        // endDate通过endTime确定
-        // status通过isExpired判断
         const formattedData = formatUserOrderData(address, userOrderData);
-        console.log(formattedData, "formattedData");
 
         if (formattedData) {
           setPolicies([formattedData]);
@@ -188,7 +175,12 @@ const AdvanceClaims = () => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-bold mb-8">Advance Claims</h1>
-      <Table columns={columns} dataSource={policiesData} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={policiesData}
+        rowKey="id"
+        loading={loading}
+      />
     </div>
   );
 };
