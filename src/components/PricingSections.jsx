@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { Modal, Spin, message } from "antd";
 import ExpectedReturnsChart from "./ExpectedReturnsChart";
 import PaymentInfo from "./PaymentInfo";
 import useWeb3Provider from "./hooks/useWeb3Provider";
@@ -53,6 +53,7 @@ const PricingSections = ({ level }) => {
   });
   const [coverage, setCoverage] = useState(BigNumber.from(0));
   const [orderType, setOrderType] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { provider, signer, contract } = useWeb3Provider();
 
@@ -93,6 +94,7 @@ const PricingSections = ({ level }) => {
   };
 
   const handleModalOk = async () => {
+    setIsLoading(true);
     try {
       const tx = await contract.deposit(
         signer.getAddress(),
@@ -100,8 +102,12 @@ const PricingSections = ({ level }) => {
         coverage.toString()
       );
       await tx.wait();
+      setIsLoading(false);
+      message.success("Deposit transaction successful!");
     } catch (error) {
       console.error("Error in deposit transaction:", error);
+      setIsLoading(false);
+      message.error("Deposit transaction failed.");
     }
 
     // TODO: payment = coverage * rate
@@ -184,14 +190,16 @@ const PricingSections = ({ level }) => {
         okButtonProps={{ style: { color: "#1F2937" } }}
         cancelButtonProps={{ style: { color: "#1F2937" } }}
       >
-        <PaymentInfo
-          rate={actualPaymentData.rate}
-          amount={actualPaymentData.amount}
-        />
-        <ExpectedReturnsChart
-          rateData={chartData.rate}
-          amountData={chartData.amount}
-        />
+        <Spin spinning={isLoading} tip="Processing transaction...">
+          <PaymentInfo
+            rate={actualPaymentData.rate}
+            amount={actualPaymentData.amount}
+          />
+          <ExpectedReturnsChart
+            rateData={chartData.rate}
+            amountData={chartData.amount}
+          />
+        </Spin>
       </Modal>
     </div>
   );
