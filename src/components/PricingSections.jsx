@@ -104,6 +104,8 @@ const PricingSections = ({ level }) => {
     setIsLoading(true);
     try {
       const address = await signer.getAddress();
+      const getValue = await contract.calcuValue(orderType, claimlevel);
+      console.log(getValue.toNumber(), "claimlevel");
       console.log(address, orderType, claimlevel);
       const tx = await contract.deposit(
         address,
@@ -111,7 +113,7 @@ const PricingSections = ({ level }) => {
         orderType,
         // claimlevel 决定买的是normal 还是 advance
         claimlevel,
-        { value: ethers.utils.parseEther("0.00001") }
+        { value: getValue }
       );
       await tx.wait();
       setIsLoading(false);
