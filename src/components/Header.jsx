@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Select } from "antd";
-import { Web3Provider } from "@ethersproject/providers";
 import { Modal } from "antd";
+import useWeb3Provider from "./hooks/useWeb3Provider";
 
 const { Option } = Select;
 
 const Header = () => {
   const navigate = useNavigate();
+  const { provider, signer, contract } = useWeb3Provider();
   const [isConnected, setIsConnected] = useState(() => {
     const storedAddress = localStorage.getItem("walletAddress");
     return storedAddress ? true : false;
@@ -15,7 +16,6 @@ const Header = () => {
   const [walletAddress, setWalletAddress] = useState(
     localStorage.getItem("walletAddress")
   );
-  const [provider, setProvider] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
@@ -52,9 +52,7 @@ const Header = () => {
       });
       const account = accounts[0];
 
-      const web3Provider = new Web3Provider(window.ethereum);
-
-      const signature = await web3Provider
+      const signature = await provider
         .getSigner(account)
         .signMessage("GasLockR Authentication");
       setIsConnected(true);
@@ -68,7 +66,7 @@ const Header = () => {
           handleDisconnect();
         } else {
           const newAccount = accounts[0];
-          const newSignature = await web3Provider
+          const newSignature = await provider
             .getSigner(newAccount)
             .signMessage("GasLockR Authentication");
           setIsConnected(true);
