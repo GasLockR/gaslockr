@@ -178,13 +178,13 @@ const PricingSections = ({ level }) => {
                   {/* min fluctuation */}
                   <div className="text-center mt-6">
                     Max Coverage:
-                    <span className="ml-2 font-semibold">
-                      {plan.maxCoverage}
+                    <span className="ml-2 font-semibold text-indigo-600">
+                      {plan.maxCoverage} ETH
                     </span>
                   </div>
                   <div className="text-center mt-2">
                     Min Fluctuation:
-                    <span className="ml-2 font-semibold">
+                    <span className="ml-2 font-semibold text-indigo-600">
                       {plan.minFluctuation}
                     </span>
                   </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Space, message, Modal, Input, Form } from "antd";
 import useWeb3Provider from "../hooks/useWeb3Provider";
+import { useCalculateAmount } from "../hooks/useCalculateAmount";
 import _ from "lodash";
 import moment from "moment";
 
@@ -96,7 +97,9 @@ const NormalClaims = () => {
         <Space size="middle">
           <Button
             disabled={record.status !== "Active"}
-            onClick={() => handleClaim(record.insuredAddress)}
+            onClick={() =>
+              handleClaim(record.insuredAddress, record.policyType)
+            }
           >
             Claim
           </Button>
@@ -109,6 +112,11 @@ const NormalClaims = () => {
   const [policiesData, setPolicies] = useState();
   const [loading, setLoading] = useState(false);
   const [claimLoading, setClaimLoading] = useState(false);
+  const [confirLoading, setConfirLoading] = useState(false);
+  const { calculateAmount, result, error } = useCalculateAmount();
+
+  const [selectedUserAddress, setSelectedUserAddress] = useState("");
+  const [selectedOrderType, setSelectedOrderType] = useState(null);
 
   const [form] = Form.useForm();
 
@@ -198,23 +206,30 @@ const NormalClaims = () => {
   };
 
   const handleClaimModalConfirm = async () => {
-    setClaimLoading(true);
+    setConfirLoading(true);
     try {
-      const values = await form.validateFields();
-      console.log("Claim form data:", values);
+      const txHash = await form.validateFields();
+      const userAddress = localStorage.getItem("walletAddress");
+      const orderType = selectedOrderType;
+      console.log(txHash.txHash, userAddress, orderType);
 
-      // 如果验证通过，关闭模态框并执行其他操作
+      await calculateAmount(userAddress, txHash.txHash, orderType);
+
+      setConfirLoading(false);
       handleClaimModalCancel();
+      message.success("Claim successfully!");
     } catch (error) {
       console.error("Form validation failed:", error);
+      setConfirLoading(false);
+      handleClaimModalCancel();
+      message.error("Claim Error. Please try again.");
     }
-
-    console.log(claimFormData);
-    // setClaimLoading(false);
-    // setClaimModalVisible(false);
   };
 
-  const handleClaim = () => {
+  const handleClaim = (userAddress, orderType) => {
+    setSelectedUserAddress(userAddress);
+
+    setSelectedOrderType(1);
     setClaimModalVisible(true);
   };
 
@@ -238,6 +253,7 @@ const NormalClaims = () => {
           <Button
             key="confirm"
             type="primary"
+            loading={confirLoading}
             onClick={handleClaimModalConfirm}
             className=" bg-indigo-600 text-white rounded-md font-semibold"
           >
@@ -259,13 +275,6 @@ const NormalClaims = () => {
             ]}
           >
             <Input placeholder="Enter transaction hash" />
-          </Form.Item>
-          <Form.Item
-            label="Amount"
-            name="amount"
-            rules={[{ required: true, message: "Please input amount!" }]}
-          >
-            <Input placeholder="Enter amount" />
           </Form.Item>
         </Form>
       </Modal>
