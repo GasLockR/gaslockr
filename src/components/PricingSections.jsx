@@ -87,6 +87,10 @@ const PricingSections = ({ level }) => {
   };
 
   const handleModalOk = () => {
+    // TODO: 6 types; input:address/coverage/type
+
+    // TODO: payment = coverage * rate
+    
     setIsModalVisible(false);
   };
 

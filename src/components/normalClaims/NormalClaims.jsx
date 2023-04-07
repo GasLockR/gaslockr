@@ -69,6 +69,7 @@ const NormalClaims = () => {
       dataIndex: "endDate",
       key: "endDate",
     },
+    // normal amount -> max coverage
     {
       title: "Amount",
       dataIndex: "amount",

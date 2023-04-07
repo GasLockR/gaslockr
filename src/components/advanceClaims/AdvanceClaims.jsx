@@ -69,6 +69,7 @@ const AdvanceClaims = () => {
       dataIndex: "endDate",
       key: "endDate",
     },
+    // advanced amount remove, add a column of real-time coverage
     {
       title: "Amount",
       dataIndex: "amount",
@@ -97,6 +98,7 @@ const AdvanceClaims = () => {
       key: "claim",
       render: (_, record) => (
         <Space size="middle">
+          {/* input address/ block.number */}
           <Button disabled={record.status !== "Active"}>Claim</Button>
         </Space>
       ),
