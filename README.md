@@ -2,7 +2,7 @@
 
 Gas Price Insurance is an insurance project that aims to provide users with protection against Ethereum gas price fluctuations. Users can ensure their transactions are protected during gas price fluctuations by purchasing insurance.
 
-Gas Lockr是一个保险项目，旨在为用户提供防止以太坊 Gas 价格波动的保险。用户可以通过购买保险来确保自己的交易能够在 Gas 价格波动时得到保障。
+Gas Lockr 是一个保险项目，旨在为用户提供防止以太坊 Gas 价格波动的保险。用户可以通过购买保险来确保自己的交易能够在 Gas 价格波动时得到保障。
 
 ## Features 功能
 
@@ -18,33 +18,19 @@ First, clone the repository to your local machine:
 
 首先，克隆仓库到本地：
 
-`git clone https://github.com/GasLockR/gaslockr-frontend.git`
+`git clone https://github.com/GasLockR/gaslockr.git`
 
-
-
-Enter the project directory: 
-
-进入项目目录： 
-
-`cd gaslockr-frontend`
-
-
-
-Install dependencies: 
+Install dependencies:
 
 安装依赖：
 
 `npm install`
 
-
-
-Start the development server: 
+Start the development server:
 
 启动开发服务器：
 
 `npm start`
-
-
 
 Now, you can visit `http://localhost:3000` to view the project.
 
