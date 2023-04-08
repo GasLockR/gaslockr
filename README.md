@@ -10,7 +10,7 @@ Gas Price Insurance is an insurance project that aims to provide users with prot
 - View purchased insurance
 - Claim
 
-## Installation 安装
+## Installation and Start
 
 First, clone the repository to your local machine:
 
