@@ -1,4 +1,4 @@
-# Gas Lockr
+# GasLockR
 
 Gas Price Insurance is an insurance project that aims to provide users with protection against Ethereum gas price fluctuations. Users can ensure their transactions are protected during gas price fluctuations by purchasing insurance.
 
@@ -9,6 +9,7 @@ Demo WebSite: [Gas LockR](https://gaslockr.azurewebsites.net)
 - Use ChainLink and other automated tools to actively listen to user transactions and, once eligibility requirements are met, actively initiate transactions to complete user rewards.
 - Choose different insurance plans
 - View expected returns
+- More sophisticated financial model for pricing the derivatives taking into account external factors like NFT sales, network upgrades, etc.
 
 ## Installation and Start
 
