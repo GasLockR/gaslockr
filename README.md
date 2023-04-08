@@ -7,8 +7,7 @@ Demo WebSite: [Gas LockR](https://gaslockr.azurewebsites.net)
 ## ToDo Features
 
 - Use ChainLink and other automated tools to actively listen to user transactions and, once eligibility requirements are met, actively initiate transactions to complete user rewards.
-- Choose different insurance plans
-- View expected returns
+- More fine grained control over insurance plans e.g. specify a custom duration / risk tolerance.
 - More sophisticated financial model for pricing the derivatives taking into account external factors like NFT sales, network upgrades, etc.
 
 ## Installation and Start
