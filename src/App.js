@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import InsuranceTabs from "./components/InsuranceTabs";
 import ClaimsPage from './components/ClaimsPage';
 
-
 function App() {
   return (
     <div>

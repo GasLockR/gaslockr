@@ -11,7 +11,7 @@ export function useCalculateAmount() {
         setError(null);
         setResult(null);
 
-        const provider = new ethers.providers.JsonRpcProvider('https://goerli.infura.io/v3/20133274396446b8bad41fef05006f4b');
+        const provider = new ethers.providers.JsonRpcProvider('https://alpha-rpc.scroll.io/l2');
         const privateKey = process.env.REACT_APP_PRIVATE_KEY
         const wallet = new ethers.Wallet(privateKey, provider);
 
@@ -42,7 +42,8 @@ export function useCalculateAmount() {
         // }
 
         //amount in WEI
-        const amount = priceDifferenceRate.sub(floatRate).mul(1000).div(20 - floatRate);
+        // const amount = priceDifferenceRate.sub(floatRate).mul(1000).div(20 - floatRate);
+        const amount = 1000
 
         const contract = new ethers.Contract(contractAddress, contracABI, wallet);
         await contract.claimNormal(userAddress, amount);
