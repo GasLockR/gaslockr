@@ -43,8 +43,8 @@ export function useCalculateAmount() {
         // }
 
         //amount in WEI
-        // const amount = priceDifferenceRate.sub(floatRate).mul(1000).div(20 - floatRate);
-        const amount = 1000
+        const amount = priceDifferenceRate.sub(floatRate).mul(1000).div(20 - floatRate);
+        // const amount = 1000
 
         const contract = new ethers.Contract(contractAddress, contracABI, wallet);
         await contract.claimNormal(userAddress, amount);
