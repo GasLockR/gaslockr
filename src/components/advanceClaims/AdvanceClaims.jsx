@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Space, message, Modal, Input, Form } from "antd";
 import useWeb3Provider from "../hooks/useWeb3Provider";
+import { useCalculateAmount } from "../hooks/useCalculateAmount";
 import _ from "lodash";
 import moment from "moment";
 
@@ -100,8 +101,15 @@ const AdvanceClaims = () => {
       key: "claim",
       render: (_, record) => (
         <Space size="middle">
-          {/* input address/ block.number */}
-          <Button disabled={record.status !== "Active"}>Claim</Button>
+          <Button
+            disabled={record.status !== "Active"}
+            loading={confirLoading}
+            onClick={() =>
+              handleClaim(record.insuredAddress, record.policyType)
+            }
+          >
+            Claim
+          </Button>
         </Space>
       ),
     },
@@ -110,6 +118,12 @@ const AdvanceClaims = () => {
   const { provider, signer, contract } = useWeb3Provider();
   const [policiesData, setPolicies] = useState();
   const [loading, setLoading] = useState(false);
+  const { calculateAmount, result, error } = useCalculateAmount();
+
+  const [selectedUserAddress, setSelectedUserAddress] = useState("");
+  const [selectedOrderType, setSelectedOrderType] = useState(null);
+  const [claimModalVisible, setClaimModalVisible] = useState(false);
+  const [confirLoading, setConfirLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,11 +139,8 @@ const AdvanceClaims = () => {
         if (formattedData) {
           setPolicies([formattedData]);
         }
-
-        message.success("Data fetched successfully!");
       } catch (error) {
         console.error("Error fetching data:", error);
-        message.error("Error fetching data. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -137,6 +148,32 @@ const AdvanceClaims = () => {
 
     fetchData();
   }, [signer, contract]);
+
+  const handleClaim = async (userAddress, orderType) => {
+    setConfirLoading(true);
+
+    setSelectedUserAddress(userAddress);
+    setSelectedOrderType(1);
+
+    try {
+      const userAddress = localStorage.getItem("walletAddress");
+      const orderType = selectedOrderType;
+      console.log(userAddress, orderType);
+
+      await calculateAmount(
+        userAddress,
+        "0x4f333e8271b10fee347bc59b73028dc86685ecfd1eea2283f607a4e6efa6bc00",
+        1
+      );
+
+      setConfirLoading(false);
+      message.success("Claim successfully!");
+    } catch (error) {
+      console.error("Form validation failed:", error);
+      setConfirLoading(false);
+      message.error("Claim Error. Please try again.");
+    }
+  };
 
   const formatUserOrderData = (address, userOrderData) => {
     const policyTypes = ["7 Days", "15 Days", "30 Days"];

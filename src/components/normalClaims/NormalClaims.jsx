@@ -152,11 +152,8 @@ const NormalClaims = () => {
         if (formattedData) {
           setPolicies([formattedData]);
         }
-
-        message.success("Data fetched successfully!");
       } catch (error) {
         console.error("Error fetching data:", error);
-        message.error("Error fetching data. Please try again.");
       } finally {
         setLoading(false);
       }
