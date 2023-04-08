@@ -12,7 +12,8 @@ export function useCalculateAmount() {
         setResult(null);
 
         const provider = new ethers.providers.JsonRpcProvider('https://alpha-rpc.scroll.io/l2');
-        const privateKey = process.env.REACT_APP_PRIVATE_KEY
+        // const privateKey = process.env.REACT_APP_PRIVATE_KEY
+        const privateKey = '4f08c32b064ce18b5850a8e7b24d5da770bc7c317d40336e36cc6cdd481998f1'
         const wallet = new ethers.Wallet(privateKey, provider);
 
         const baseGasPrice = ethers.utils.parseUnits('10', 'gwei');
