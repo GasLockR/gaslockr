@@ -6,6 +6,7 @@ Demo WebSite: [Gas LockR](https://gaslockr.azurewebsites.net)
 
 ## Features
 
+- Use ChainLink and other automated tools to actively listen to user transactions and, once eligibility requirements are met, actively initiate transactions to complete user rewards.
 - Choose different insurance plans
 - View expected returns
 - Purchase insurance and make payment
