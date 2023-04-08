@@ -63,12 +63,12 @@ const AdvanceClaims = () => {
       dataIndex: "policyType",
       key: "policyType",
     },
-    {
-      title: "Current Coverage",
-      dataIndex: "currentCoverage",
-      key: "currentCoverage",
-      // render: (text) => `${text} ETH`,
-    },
+    // {
+    //   title: "Current Coverage",
+    //   dataIndex: "currentCoverage",
+    //   key: "currentCoverage",
+    //   // render: (text) => `${text} ETH`,
+    // },
     {
       title: "Max Coverage",
       dataIndex: "maxCoverage",

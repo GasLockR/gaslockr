@@ -11,8 +11,8 @@ const PricingSections = ({ level }) => {
     {
       title: "7 Days",
       subTitle: "Quick coverage",
-      price: level === "normal" ? "$10" : "$20",
-      maxCoverage: "10,00",
+      price: level === "normal" ? "0.01 ETH" : "0.05 ETH",
+      maxCoverage: level === "normal" ? "1" : "5",
       minFluctuation: "5%",
       features: [
         "Flexible coverage",
@@ -25,8 +25,8 @@ const PricingSections = ({ level }) => {
     {
       title: "15 Days",
       subTitle: "Balanced plan",
-      price: level === "normal" ? "$30" : "$60",
-      maxCoverage: "10,000",
+      price: level === "normal" ? "0.02 ETH" : "0.1 ETH",
+      maxCoverage: level === "normal" ? "1" : "5",
       minFluctuation: "10%",
       popular: true,
       features: [
@@ -40,8 +40,8 @@ const PricingSections = ({ level }) => {
     {
       title: "30 Days",
       subTitle: "Complete protection",
-      price: level === "normal" ? "$100" : "$200",
-      maxCoverage: "20,000",
+      price: level === "normal" ? "0.05 ETH" : "0.25 ETH",
+      maxCoverage: level === "normal" ? "1" : "5",
       minFluctuation: "25%",
       features: [
         "Maximum protection",
@@ -148,17 +148,12 @@ const PricingSections = ({ level }) => {
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-            Pricing
+          <h2 className="text-3xl text-indigo-600 font-semibold tracking-wide uppercase">
+            Gas Insure
           </h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Choose your insurance
-          </p>
           <p className="mt-4 max-w-4xl text-xl text-gray-500 lg:mx-auto">
-            Our insurance plans offer the best protection against gas price
-            fluctuations, ensuring you can always execute your transactions with
-            peace of mind. Secure your assets and save money by choosing the
-            plan that suits your needs.
+            GasInsure is the first insurance service for gas prices designed for
+            L2's. It is built on top of the GasLockR protocol.
           </p>
         </div>
 
