@@ -9,7 +9,7 @@ const ExpectedReturnsChart = ({ rateData, amountData }) => {
         axisPointer: {
           type: "cross",
           label: {
-            backgroundColor: "#6a7985",
+            backgroundColor: "#000000",
           },
         },
       },
@@ -17,13 +17,15 @@ const ExpectedReturnsChart = ({ rateData, amountData }) => {
         type: "category",
         boundaryGap: false,
         data: rateData,
+        name: "Fluc (%)",
       },
       yAxis: {
         type: "value",
+        name: "Max Coverage (ETH)",
       },
       series: [
         {
-          name: "Amount",
+          name: "Coverage",
           type: "line",
           stack: "总量",
           areaStyle: {},
